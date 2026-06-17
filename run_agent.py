@@ -5227,6 +5227,23 @@ class AIAgent:
         persist_user_timestamp: Optional[float] = None,
     ) -> Dict[str, Any]:
         """Forwarder — see ``agent.conversation_loop.run_conversation``."""
+        try:
+            from swarm_orchestrator.config import load_swarm_council_config
+            if (
+                load_swarm_council_config().enabled
+                and not getattr(self, "_swarm_council_active", False)
+                and conversation_history is None
+                and system_message is None
+            ):
+                from swarm_orchestrator.orchestrator import run_swarm_council
+
+                self._swarm_council_active = True
+                try:
+                    return run_swarm_council(self, user_message)
+                finally:
+                    self._swarm_council_active = False
+        except Exception as exc:
+            logger.warning("Swarm council pre-layer failed; falling back to normal agent flow: %s", exc)
         from agent.conversation_loop import run_conversation
         return run_conversation(
             self,

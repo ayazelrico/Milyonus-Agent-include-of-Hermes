@@ -1,0 +1,7 @@
+# Swarm Orchestrator Discovery Notes
+
+- `run_agent.py` owns `AIAgent`; its `run_conversation()` method delegates into `agent.conversation_loop.run_conversation`, while the OpenAI-compatible SDK client is created and reused through `AIAgent.client` / `_create_request_openai_client()` rather than a separate LLM wrapper.
+- `tools/delegate_tool.py` is the existing Hermes subagent mechanism: `delegate_task` spawns child `AIAgent` instances, enforces subagent limits/tool restrictions, runs children in a thread pool, and tracks active subagents. The orchestrator should call this path instead of inventing a new worker transport.
+- `acp_adapter/` exposes Hermes over the Agent Client Protocol for editor clients. `acp_adapter/session.py` maps ACP sessions to `AIAgent` instances, while `acp_adapter/server.py` handles ACP JSON-RPC/session lifecycle; it is not a general in-process worker registry for Hermes subagents.
+- `.plans/` currently contains human design notes (`streaming-support.md`, `openai-api-server.md`) rather than runtime plan objects, so the swarm plan dataclasses can live under `swarm_orchestrator/` without colliding with an existing persisted plan format.
+- Runtime behavioral configuration is read from `~/.hermes/config.yaml` via helpers such as `gateway/run.py` and `hermes_constants.get_hermes_home()`; new swarm-council toggles should be config keys, not new user-facing environment variables.
