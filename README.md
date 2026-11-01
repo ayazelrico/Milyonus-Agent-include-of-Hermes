@@ -1,3 +1,23 @@
+<div align="center">
+
+<img src="docs/assets/milyonus-wordmark-lg.png" alt="Milyonus" width="640" />
+
+**Milyonus agent workspace built on the Hermes Agent codebase.**
+
+[Website](https://www.milyonus.com) · [Repository](https://github.com/ayazelrico/Milyonus-Agent-include-of-Hermes)
+
+</div>
+
+---
+
+# Milyonus Agent - Hermes Workspace
+
+This repository is the Milyonus workspace based on [Hermes Agent by Nous Research](https://github.com/NousResearch/hermes-agent). The upstream engine, package names and commands remain Hermes. README branding does not establish a separate Milyonus runtime or completed integration.
+
+Start with the upstream setup below; use [AGENTS.md](AGENTS.md) for development, [CONTRIBUTING.md](CONTRIBUTING.md) for contributions and [LICENSE](LICENSE) for reuse. Original authorship and notices are retained.
+
+## Upstream Hermes documentation
+
 <p align="center">
   <img src="assets/banner.png" alt="Hermes Agent" width="100%">
 </p>
